@@ -1,0 +1,32 @@
+{
+  "name": "shell-mcp-server",
+  "version": "0.1.0",
+  "description": "MCP server exposing local Windows PowerShell and cmd.exe over Streamable HTTP, designed to sit behind an ngrok Traffic Policy.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test test/*.test.ts",
+    "inspect": "npx @modelcontextprotocol/inspector"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "dotenv": "^18.0.7",
+    "express": "^5.3.0",
+    "jose": "^6.2.12",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

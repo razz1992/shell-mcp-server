@@ -1,0 +1,26 @@
+# ngrok Traffic Policy for the shell MCP server.
+# Start with:  ngrok http 8000 --url=your-name.ngrok-free.app --traffic-policy-file=ngrok/policy.yml
+#
+# Authentication (OAuth 2.1 bearer tokens) is enforced by the server itself, because MCP clients
+# need the server's 401 + WWW-Authenticate challenge to discover your identity provider.
+# This policy adds edge protections in front of it. Verify keys against the current ngrok docs.
+on_http_request:
+  # Optional: only allow your own IPs / agent vendors' egress ranges. Uncomment and edit.
+  # - name: ip-allowlist
+  #   actions:
+  #     - type: restrict-ips
+  #       config:
+  #         enforce: true
+  #         allow:
+  #           - 203.0.113.10/32
+
+  - name: rate-limit-per-ip
+    actions:
+      - type: rate-limit
+        config:
+          name: shell-mcp-per-ip
+          algorithm: sliding_window
+          capacity: 120
+          rate: 60s
+          bucket_key:
+            - conn.client_ip
